@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}{% endblock %}</title>
+    <script
+      src="https://unpkg.com/htmx.org@1.9.6"
+      integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        padding: 0;
+        box-sizing: border-box;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+    {% endblock %}
+  </head>
+
+  <body
+    hx-boost="true"
+    class="w-screen h-full flex flex-col gap-y-10 bg-slate-50"
+  >
+    <header class="flex w-full justify-between items-center p-5 bg-sky-200">
+      <a
+        {% comment %} href="{{url_for('index.hello_traveller')}}" {% endcomment %}
+        class="text-center text-lg font-semibold"
+        >((Listening))<br />&lt;&lt;Monster&gt;&gt;</a
+      >
+      <ul class="flex">
+        <li id='logout'>
+          <a>Logout</a>
+        </li>
+      </ul>
+    </header>
+    <div class="container flex w-full">
+      <div id="content" class="w-full h-full flex flex-col items-center">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <footer class="flex w-full p-10">
+      {% comment %} {% with messages = get_flashed_messages() %} {% if messages %} {% endcomment %}
+      <ul class="flashes">
+        {% comment %} {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %} {% endcomment %}
+      </ul>
+      {% comment %} {% endif %} {% endwith %} {% block footer %} {% endcomment %}
+      <a href="https://github.com/ngareleo/listening-monster" target="_blank"
+        >Github</a
+      >
+      {% comment %} {% endblock %} {% endcomment %}
+    </footer>
+    <script src="{% static 'app/logout.js' %}"></script>
+  </body>
+</html>
