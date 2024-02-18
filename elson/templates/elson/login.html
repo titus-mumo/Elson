@@ -1,4 +1,4 @@
-{% extends 'app/base.html' %} {% load static %} {% load crispy_forms_tags %} 
+{% extends 'elson/base.html' %} {% load static %}  
 
 {% block title %}login{% endblock title %}
 
@@ -8,15 +8,15 @@
     <form method="post" action="{% url 'login' %}">
       {% csrf_token %}
         <div class="flex flex-col gap-y-3">
-            <div class="form-group">
-              {{ form.username | as_crispy_field}}
-            </div>
-            <div class="form-group">
-              {{ form.password | as_crispy_field}}
-            </div>
+          {% for field in form %}
+          <div class="flex flex-col gap-y-2">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
             <input type="submit" class="w-full bg-rose-200 rounded-md p-2.5 text-gray-700" value="Login" />
         </div>
     </form>
-    <a href="/register" class="text-sky-800 underline">I don't have an account</a>
+    <a href="{% url 'register' %}" class="text-sky-800 underline">I don't have an account</a>
 </div>
 {% endblock content %}

@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     {% block head %}
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href={% static 'elson/style.css'%} />
     <title>{% block title %}{% endblock %}</title>
     <script
       src="https://unpkg.com/htmx.org@1.9.6"
@@ -34,7 +34,7 @@
       >
       <ul class="flex">
         <li id='logout'>
-          <a>Logout</a>
+          <a href="{% url 'logout' %}">Logout</a>
         </li>
       </ul>
     </header>
@@ -44,18 +44,19 @@
       </div>
     </div>
     <footer class="flex w-full p-10">
-      {% comment %} {% with messages = get_flashed_messages() %} {% if messages %} {% endcomment %}
-      <ul class="flashes">
-        {% comment %} {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %} {% endcomment %}
+    {% if messages %}
+      <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
       </ul>
-      {% comment %} {% endif %} {% endwith %} {% block footer %} {% endcomment %}
+    {% endif %}
+    {% block footer %} 
       <a href="https://github.com/ngareleo/listening-monster" target="_blank"
         >Github</a
       >
-      {% comment %} {% endblock %} {% endcomment %}
+    {% endblock footer%}
     </footer>
-    <script src="{% static 'app/logout.js' %}"></script>
+    {% comment %} <script src="{% static 'elson/logout.js' %}"></script> {% endcomment %}
   </body>
 </html>

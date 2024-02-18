@@ -1,0 +1,16 @@
+{% macro input(name, value='', type='text', title='', placeholder='', size=20,
+required=true) -%}
+<div class="flex flex-col gap-y-2">
+  <label for="{{name}}">{{title}}</label>
+  <input
+    type="{{type}}"
+    name="{{name}}"
+    value="{{value|e}}"
+    placeholder="{{placeholder}}"
+    size="{{size}}"
+    id="{{name}}"
+    class="flex py-2 px-2 border border-slate-300 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+    required="{{required}}"
+  />
+</div>
+{%- endmacro %}

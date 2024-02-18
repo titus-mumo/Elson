@@ -54,7 +54,7 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     user_id = models.AutoField(unique=True, primary_key=True)
-    user_email = models.CharField(max_length=40, unique=True)
+    email = models.CharField(max_length=40, unique=True)
     username = models.CharField(max_length=40, unique=True)
     # password = models.CharField(max_length=128)  # Storing hashed passwords
 
@@ -67,7 +67,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return self.email
+        return self.username
 
     def has_perm(self, perm, obj=None):
         return True
@@ -80,12 +80,34 @@ class User(AbstractBaseUser):
         return self.is_admin
 
 
+class TemporaryAudioFile(models.Model):
+    audiofile_id = models.AutoField(primary_key=True, unique=True)
+    audio_file = models.FileField(upload_to='temporary/')
+
+    def __str__(self):
+        # Convert to string to represent the file path
+        return str(self.audio_file)
+
+    def get_audio_file(self):
+        """
+        Method to return the audio file content.
+        """
+        try:
+            with open(self.audio_file.path, 'rb') as file:
+                return file.read()
+        except FileNotFoundError:
+            print("No file found")
+            return None  # Handle file not found error
+
 class Audio(models.Model):
     audio_id = models.AutoField(primary_key=True, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    audio_file = models.FileField(upload_to='audio/', null=True)
     label = models.CharField(max_length=30)
+    uid = models.CharField(max_length = 50, null=True)
     description = models.CharField(max_length=200)
     _length = models.IntegerField()
+    uploaded_at = models.DateTimeField(auto_now_add = True, null = True)
 
     @property
     def length(self) -> str:
@@ -114,3 +136,6 @@ class Transcription(models.Model):
     transcription_id = models.AutoField(primary_key=True, unique=True)
     value = models.CharField(max_length=200)
     audio = models.ForeignKey(Audio, on_delete=models.CASCADE)
+
+
+

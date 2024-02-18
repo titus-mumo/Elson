@@ -1,5 +1,21 @@
-{% extends 'app/base.html' %} {% load static %} {% load crispy_forms_tags %} 
+{% extends 'elson/base.html' %} {% load static %}
+
+{% block title %}register{% endblock title %}
 
 {% block content %}
-<p>Registration page</p>
+<div class="flex flex-col w-1/2 gap-y-5 max-w-lg">
+    <h1 class="text-3xl">Create a monster account</h1>
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token  %}
+          {% for field in form %}
+          <div class="flex flex-col gap-y-2">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+          </div>
+        {% endfor %}
+        <input type="submit" class="w-full bg-rose-200 rounded-md p-2.5 text-gray-700 my-2" value="Create account" />
+    </form>
+    <a href="{% url 'login' %}" class="text-sky-800 underline">I already have an account</a>
+</div>
 {% endblock content %}
+

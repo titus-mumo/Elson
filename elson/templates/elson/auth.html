@@ -1,0 +1,9 @@
+{% block content %}
+<section>
+  {% if login %}
+  <section>{% include "elson/login.html"%}</section>
+  {%else%}
+  <section>{% include "elson/register.html"%}</section>
+  {%endif%}
+</section>
+{% endblock content %}
