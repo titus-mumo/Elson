@@ -1,0 +1,14 @@
+{% extends "elson/base.html" %}
+<head>
+  {% block title %}Login{% endblock title%} 
+</head>
+{% block content %}
+<section>
+  {% if login %}
+  <section id='login'>{% include "elson/sections/login.html"%}</section>
+  {%else%}
+  <section id='register'>{% include "elson/sections/register.html"%}</section>
+  {%endif%}
+</section>
+
+{% endblock content%}

@@ -1,0 +1,12 @@
+{% load static %}
+
+<figure class="flex flex-col gap-y-2 w-full">
+  <div class="flex items-center">
+    <audio controls src="{{location}}">
+      <a href="{{location}}"> Download audio </a>
+    </audio>
+    <button>
+      <img src="{% static 'icons/remove.svg' %}" />
+    </button>
+  </div>
+</figure>

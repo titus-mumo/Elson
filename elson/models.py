@@ -134,7 +134,7 @@ class Audio(models.Model):
 
 class Transcription(models.Model):
     transcription_id = models.AutoField(primary_key=True, unique=True)
-    value = models.CharField(max_length=200)
+    value = models.CharField(max_length=100000)
     audio = models.ForeignKey(Audio, on_delete=models.CASCADE)
 
 

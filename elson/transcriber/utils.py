@@ -8,7 +8,7 @@ from django.conf import settings
 def get_audio_file_length_in_secs(loc: str) -> int:
     """Get length of mp3 files in sec"""
 
-    media_root_parent = os.path.dirname(settings.MEDIA_ROOT)
+    media_root_parent = os.path.dirname(settings.STATIC_ROOT)
     path = media_root_parent + loc
     file_path = os.path.normpath(path)
     print(file_path)

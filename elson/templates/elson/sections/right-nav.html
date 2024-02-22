@@ -1,0 +1,68 @@
+{% load static %}
+
+<div class="flex flex-col w-full gap-y-10" id="right-section">
+  {% if audio %}
+  <div class="flex flex-col w-full gap-y-5">
+    <div class="flex w-full justify-between">
+      <div>
+        <h1 class="text-xl font-semibold">{{audio.label}}</h1>
+        <p class="text-sm">{{audio.description}}</p>
+      </div>
+      <div class="flex flex-col items-end">
+        <p class="text-sm">Uploaded on {{audio.uploaded_at.date}}</p>
+        <p class="text-sm">{{audio.length}}</p>
+      </div>
+    </div>
+    <div class="flex gap-x-3">
+      <button hx-delete="{% url 'audio' audio.uid|urlencode %}" hx-confirm>
+        <img src="{% static 'icons/delete.svg'%}" />
+      </button>
+      <button>
+        <img src="{% static 'icons/edit.svg'%}" />
+      </button>
+      <button
+        hx-get="{% url 'player' audio.uid|urlencode %}"
+        hx-target="#player"
+        hx-swap="outerHTML"
+      >
+        <img src="{% static 'icons/play.svg'%}" />
+      </button>
+      <div id="player"></div>
+    </div>
+    <div class="flex gap-x-3">
+      <select>
+        <option>Google translate</option>
+        <option>Chrome translate</option>
+      </select>
+      <button
+        hx-get="{% url 'generate' audio.uid|urlencode %}"
+        hx-target="#right-section"
+        hx-swap="outerHTML"
+        class="bg-slate-800 px-2 py-2 text-white rounded-lg"
+      >
+        Generate transcription
+      </button>
+    </div>
+  </div>
+  {%if transcriptions %} {% for transcription in transcriptions %}
+  <div class="flex flex-col gap-y-5 p-2 border border-slate-200 rounded-md">
+    <div class="flex justify-between">
+      <p>Translation by Google chrome</p>
+      <button>
+        <img src="{% static 'icons/copy.svg'%}" />
+      </button>
+    </div>
+    <p class="text-sm">{{transcription.value}}</p>
+  </div>
+  {% endfor %} {% else %}
+  <div
+    class="flex w-full h-20 items-center justify-center border border-slate-300 rounded-md drop-shadow-md"
+  >
+    <p>No transcriptions yet</p>
+  </div>
+  {% endif %} {% else %}
+  <div class="flex w-full items-center justify-center h-20">
+    <p>No audio chosen</p>
+  </div>
+  {% endif %}
+</div>

@@ -23,6 +23,3 @@ class ConfirmedAudioFileExists(AudioUploadException):
     def __init__(self, user: User, file_details: AudioDiagnosticsFile) -> None:
         # Log the information
         super().__init__(user)
-
-
-

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'elson',
     'tailwind',
+    'macros'
 ]
 
 TAILWIND_APP_NAME = 'elson'

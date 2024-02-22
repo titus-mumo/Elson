@@ -1,0 +1,42 @@
+<form
+  action="{% url 'upload' %}"
+  method="post"
+  enctype="multipart/form-data"
+  class="border rounded-md flex flex-col gap-y-5 w-3/4 p-5 max-w-md"
+>
+  {% csrf_token %}
+  <label for="id_title" class="text-sm font-semibold text-black">Title</label>
+  <input
+    type="text"
+    name="title"
+    id="id_title"
+    placeholder="Enter title"
+    class="py-2 px-4 rounded-full border-0 text-sm font-semibold bg-violet-50 text-violet-700"
+    required
+    aria-required="true"
+  />
+  <label for="id_description" class="text-sm font-semibold text-black">Description</label>
+  <input
+    type="text"
+    name="description"
+    id="id_description"
+    placeholder="Enter description for audio file"
+    class="py-2 px-4 rounded-full border-0 text-sm font-semibold bg-violet-50 text-violet-700"
+    required
+    aria-required="true"
+  />
+  <input
+    type="file"
+    name="audio"
+    class="mr-4 py-2 px-4 rounded-full border-0 text-sm font-semibold bg-violet-50 text-violet-700"
+    required
+    aria-required="true"
+  />
+  <input
+    type="submit"
+    value="Add to library"
+    class="px-2 py-3 border-2 rounded-[30px] border-slate-300 text-black bg-slate-white text-sm"
+  />
+</form>
+
+
