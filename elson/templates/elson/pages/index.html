@@ -1,11 +1,11 @@
 {% extends "elson/base.html" %} {% block title %}Home{% endblock %} 
  {% block content %}
-<div class="container flex">
-  <div class="w-1/2 h-auto">
-    {% include "elson/sections/left-nav.html" %}
-  </div>
-  <div class="w-1/2 h-30">
+<div class="md:flex md:flex-row-reverse">
+    <div class=" h-30 md:basis-1/2">
     {% include "elson/sections/right-nav.html" %}
+  </div>
+  <div class=" h-auto md:basis-1/2">
+    {% include "elson/sections/left-nav.html" %}
   </div>
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from .models import Audio, User, CustomUserManager
+from .models import User
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
@@ -64,7 +64,10 @@ def register(request):
 @TemplateRules.returns_page
 def login_view(request):
     if request.method == 'GET':
-        return TemplateRules.render_html_page("auth.html", login=True)
+        if request.user.is_authenticated:
+            return redirect(views.index)
+        else:
+            return TemplateRules.render_html_page("auth.html", login=True)
     else:
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
@@ -94,3 +97,9 @@ def logout_view(request):
 
 def auth(request):
     return render(request, 'elson/pages/auth.html')
+
+def handle_unmatching_urls(request):
+    if request.user.is_authenticated:
+        return redirect(views.index)
+    else:
+        return redirect(login_view)

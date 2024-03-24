@@ -24,18 +24,24 @@
 
   <body
     hx-boost="true"
-    class="w-screen h-full flex flex-col gap-y-10 bg-slate-50"
+    class="w-100 h-full flex flex-col gap-y-10 bg-slate-50 m-1 "
   >
-    <header class="flex w-full justify-between items-center p-5 bg-sky-200">
+    <header class="flex w-full justify-between items-center p-5 bg-sky-200 rounded-md">
       <a
         {% comment %} href="{{url_for('index.hello_traveller')}}" {% endcomment %}
         class="text-center text-lg font-semibold"
         >((Listening))<br />&lt;&lt;Monster&gt;&gt;</a
       >
       <ul class="flex">
+        {% if login%}
+        <li id='login'>
+          <a href="{% url 'login' %}">Login</a>
+        </li>
+        {% else %}
         <li id='logout'>
           <a href="{% url 'logout' %}">Logout</a>
         </li>
+        {% endif %}
       </ul>
     </header>
     <div class="container flex w-full">
