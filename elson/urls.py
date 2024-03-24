@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views, audio, auth, upload
 
 urlpatterns = [
@@ -12,5 +12,6 @@ urlpatterns = [
     path('generate/<str:uid>', audio.generate, name='generate'),
     path('audio/<str:uid>', audio.open_audio, name='audio'),
     path('auth/', auth.auth, name='auth'),
-    path('player/<str:uid>', audio.player, name='player')
+    path('player/<str:uid>', audio.player, name='player'),
+    re_path(r'^.*/$', auth.handle_unmatching_urls)
 ]

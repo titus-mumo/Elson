@@ -10,6 +10,7 @@ from .transcriber.transcriber import Transcriber
 from .models import Audio
 from django.db import IntegrityError
 import os
+from django.conf import settings
 
 transcriber = Transcriber()
 working_directory = os.getcwd()
@@ -43,9 +44,13 @@ def generate(request, uid: str):
     if not audio or audio.user != user:
         messages.error("Something went wrong")
         return TemplateRules.render_html_segment("right-nav")
-    audio_file = audio.audio_file
-    audio_splitter = TimebasedAudioSplitter(audio_file, 10)
+    audio_file = str(audio.audio_file)
+    audio_loc = os.path.join(str(settings.MEDIA_ROOT), audio_file.replace('/', '\\'))
+    print(f"Path, {audio_loc}")
+    #TODO: The function below results to an error
+    audio_splitter = TimebasedAudioSplitter(audio_loc, 10)
     try:
+        print("Executing this line")
         transcription = Transcription.objects.create(value = transcriber.transcribe(audio_splitter), audio = audio)
     except IntegrityError as ie:
         messages.error(request, "Sorry something went wrong")
